@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{url_for("static", filename="css/base.css")}}" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1>Users Backoffice</h1>
+
+            <nav id="menu">
+                <ul>
+                    <li><a href="{{url_for("index")}}">home</a></li>
+                    <li><a href="{{url_for("about")}}">about</a></li>
+                    <li><a href="{{url_for("login")}}">login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            All rights reserved
+        </footer>
+    </body>
+</html>
