@@ -1,0 +1,13 @@
+credentials:
+  usernames:
+    capstone:
+      email: max@heilingbrunner.info
+      name: Capstone
+      password: $2b$12$BWDKGOfmNxROdskxk/hkuugnyxC0PoE5OjmqUIKqWFhSfPgynNWou # Pandas2020!
+cookie:
+  expiry_days: 30
+  key: JHSF&%/&S$& 
+  name: token
+preauthorized:
+  emails:
+  - max@heilingbrunner.info  
