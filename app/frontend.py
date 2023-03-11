@@ -1,12 +1,10 @@
 # Import modules
-from SQLAlchemy import create_engine, engine, text
+from sqlalchemy import create_engine, engine
 import pandas as pd
 import numpy as np
 import streamlit as st
 import requests
 from flask import Flask
-from flask_restx import Api, Namespace, Resource
-from datetime import datetime
 import altair as alt
 from PIL import Image
 import streamlit_authenticator as stauth
