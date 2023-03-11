@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from sqlalchemy import create_engine
+from SQLAlchemy import create_engine
 from flask_restx import Api, Namespace, Resource
 
 user = "root"

@@ -1,5 +1,5 @@
 # Import modules
-from sqlalchemy import create_engine, engine, text
+from SQLAlchemy import create_engine, engine, text
 import pandas as pd
 import numpy as np
 import streamlit as st
