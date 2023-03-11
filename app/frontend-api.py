@@ -7,6 +7,7 @@ import streamlit_authenticator as stauth
 from yaml.loader import SafeLoader
 import yaml
 import authenticator
+import requests
 
 with open('app/config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -29,7 +30,9 @@ if authentication_status:
     @st.experimental_memo #st.cache
     def load_data(url):
         try:
-            data = pd.read_json(f"api.maxharrison.de/api/v1/{url}")
+            headers = {'x-api-key': 'IEMCSBT23'}
+            request = requests.get(f"api.maxharrison.de/api/v1/{url}", headers=headers).json()
+            data = pd.DataFrame(request)
         except Exception as e:
             print(e)
         return data 
