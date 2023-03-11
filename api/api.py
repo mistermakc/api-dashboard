@@ -97,6 +97,7 @@ class get_sg(Resource):
     
 @revenue.route("/average_order_value")
 class get_aov(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
@@ -112,6 +113,7 @@ class get_aov(Resource):
     
 @marketing.route("/fashion_news_effectiveness")
 class get_fne(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
@@ -127,6 +129,7 @@ class get_fne(Resource):
     
 @marketing.route("/fashion_news_frequency")
 class get_fnf(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
@@ -142,6 +145,7 @@ class get_fnf(Resource):
     
 @resources.route("/inventory_turnover")
 class get_it(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
@@ -157,6 +161,7 @@ class get_it(Resource):
     
 @resources.route("/customer_retentation_rate")
 class get_crr(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
@@ -172,6 +177,7 @@ class get_crr(Resource):
     
 @products.route("/product_sales")
 class get_ps(Resource):
+    @require_api_key
     def get(self):
         # Defining SQL query to get the data
         query = """
