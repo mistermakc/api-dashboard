@@ -31,7 +31,7 @@ if authentication_status:
     def load_data(url):
         try:
             headers = {'x-api-key': 'IEMCSBT23'}
-            request = requests.get(f"api.maxharrison.de/api/v1/{url}", headers=headers).json()
+            request = requests.get(f"https://api.maxharrison.de/api/v1/{url}", headers=headers).json()
             data = pd.DataFrame(request)
         except Exception as e:
             print(e)
