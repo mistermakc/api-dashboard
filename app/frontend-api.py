@@ -29,7 +29,7 @@ if authentication_status:
     @st.experimental_memo #st.cache
     def load_data(url):
         try:
-            data = pd.read_json(f"http://127.0.0.1:5000/api/v1/{url}")
+            data = pd.read_json(f"api.maxharrison.de/api/v1/{url}")
         except Exception as e:
             print(e)
         return data 
