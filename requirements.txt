@@ -1,4 +1,4 @@
-sqlalchemy==1.4.40
+SQLAlchemy==1.4.40
 Flask==2.2.2
 streamlit==1.16.0
 pandas
@@ -8,5 +8,5 @@ flask-restx
 datetime
 Pillow
 streamlit_authenticator
-yaml
+pyyaml
 authenticator
