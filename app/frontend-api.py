@@ -9,9 +9,11 @@ import yaml
 import authenticator
 import requests
 
+# Defining credentials 
 with open('app/config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
+# Creating authenticator variable
 authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
@@ -20,19 +22,26 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
+# Establishing login
 name, authentication_status, username = authenticator.login('Login', 'main')
 
+# Establishing routes to login
 if authentication_status:
     authenticator.logout('Logout', 'main')
     st.write(f'Welcome *{name}*')
 
     # Defining querying function
-    @st.experimental_memo #st.cache
+    @st.cache
     def load_data(url):
         try:
             headers = {'x-api-key': 'IEMCSBT23'}
             request = requests.get(f"https://api.maxharrison.de/api/v1/{url}", headers=headers).json()
             data = pd.DataFrame(request)
+            data["kpi_date"] = pd.to_datetime(data["kpi_date"])
+            if "sales_channel_id" in data.columns:
+                data['sales_channel'] = data['sales_channel_id'].map({1: "Offline", 2: "Online"})
+            if "fashion_news" in data.columns:
+                data['fashion_news'] = data['fashion_news'].map({0: "No", 1: "Yes"})
         except Exception as e:
             print(e)
         return data 
@@ -46,37 +55,6 @@ if authentication_status:
     df_crr = load_data("customer_retentation_rate")
     df_ps = load_data("product_sales")
     
-    # Encode kpi_date
-    def encode_date(df):
-        df["kpi_date"] = pd.to_datetime(df["kpi_date"])
-        return df
-    
-    df_sg = encode_date(df_sg)        
-    df_aov = encode_date(df_aov) 
-    df_fne = encode_date(df_fne) 
-    df_fnf = encode_date(df_fnf) 
-    df_it = encode_date(df_it) 
-    df_crr = encode_date(df_crr) 
-    df_ps = encode_date(df_ps) 
-
-    # Encoding "Sales Channel" variable
-    def encode_id(x):
-        if x == 1:
-            return "Offline"
-        if x == 2:
-            return "Online"
-    df_sg['sales_channel'] = df_sg['sales_channel_id'].transform(encode_id)
-    df_aov['sales_channel'] = df_aov['sales_channel_id'].transform(encode_id)
-    df_it['sales_channel'] = df_it['sales_channel_id'].transform(encode_id)
-
-    # Encoding "Fashion News" variable
-    def encode_fn(x):
-        if x == 0:
-            return "No"
-        if x == 1:
-            return "Yes"
-    df_fne['fashion_news'] = df_fne['fashion_news'].transform(encode_fn)
-
     # Defining multiselection in Streamlit for sales channel
     sales_channel_unique = df_sg["sales_channel"].drop_duplicates().to_list()
     filter_sales_channel = st.sidebar.multiselect(
@@ -124,38 +102,24 @@ if authentication_status:
         key="multiselect_product"
     )
 
-    # Defining data to be shown based on filters
-    filtered_data_sg = df_sg[
-        (df_sg["sales_channel"].isin(filter_sales_channel)) & 
-        (df_sg["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
+    def filter_data(df, filters):
+        filtered_data = df.copy()
+        for column, filter_values in filters.items():
+            filtered_data = filtered_data[filtered_data[column].isin(filter_values)]
+        filtered_data = filtered_data[
+            filtered_data["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both')
+        ]
+        return filtered_data
 
-    filtered_data_aov = df_aov[
-        (df_aov["sales_channel"].isin(filter_sales_channel)) & 
-        (df_aov["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
-
-    filtered_data_fne = df_fne[
-        (df_fne["fashion_news"].isin(filter_fashion_news)) & 
-        (df_fne["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
-
-    filtered_data_fnf = df_fnf[
-        (df_fnf["fashion_news_frequency"].isin(filter_fashion_news_frequency)) & 
-        (df_fnf["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
-
-    filtered_data_it = df_it[
-        (df_it["sales_channel"].isin(filter_sales_channel)) & 
-        (df_it["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
-
-    filtered_data_crr = df_crr[
-        (df_crr["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
-
-    filtered_data_ps = df_ps[
-        (df_ps["product_type_name"].isin(filter_product)) & 
-        (df_ps["kpi_date"].between(filter_date[0], filter_date[1], inclusive='both'))]
+    filtered_data_sg = filter_data(df_sg, {"sales_channel": filter_sales_channel})
+    filtered_data_aov = filter_data(df_aov, {"sales_channel": filter_sales_channel})
+    filtered_data_fne = filter_data(df_fne, {"fashion_news": filter_fashion_news})
+    filtered_data_fnf = filter_data(df_fnf, {"fashion_news_frequency": filter_fashion_news_frequency})
+    filtered_data_it = filter_data(df_it, {"sales_channel": filter_sales_channel})
+    filtered_data_crr = filter_data(df_crr, {})
+    filtered_data_ps = filter_data(df_ps, {"product_type_name": filter_product})
     filtered_data_ps["kpi_date"] = pd.to_datetime(filtered_data_ps["kpi_date"]).dt.strftime('%m-%Y')
-    filtered_data_ps = filtered_data_ps.rename(columns={"kpi_date": "Date",
-                            "product_type_name": "Product Name",
-                            "price": "Numbers Sold"
-                            })
+    filtered_data_ps = filtered_data_ps.rename(columns={"kpi_date": "Date", "product_type_name": "Product Name", "price": "Numbers Sold"})
 
     # Creating the chart for sales growth
     chart_sg = alt.Chart(filtered_data_sg).mark_bar().encode(
