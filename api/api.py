@@ -22,7 +22,6 @@ def require_api_key(func):
             return {'message': 'Invalid API key'}, 401
     return wrapper
 
-
 # Define section revenue for api user interface
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = host
@@ -34,8 +33,18 @@ api = Api(app, version = '1.0',
         Used to communicate between mySQL database and streamlit
         """,
     contact = "max.heilingbrunner@student.ie.edu",
-    endpoint = "/api/v1"
+    endpoint = "/api/v1",
+    security='apikey'
 )
+
+# Define the API key security scheme
+api.authorizations = {
+    'apikey': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'X-API-KEY'
+    }
+}
 
 # Defining section revenue for api user interface
 revenue = Namespace('Revenue',
@@ -81,6 +90,7 @@ def connect(query):
 
 @revenue.route("/sales_growth")
 class get_sg(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -97,6 +107,7 @@ class get_sg(Resource):
     
 @revenue.route("/average_order_value")
 class get_aov(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -113,6 +124,7 @@ class get_aov(Resource):
     
 @marketing.route("/fashion_news_effectiveness")
 class get_fne(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -129,6 +141,7 @@ class get_fne(Resource):
     
 @marketing.route("/fashion_news_frequency")
 class get_fnf(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -145,6 +158,7 @@ class get_fnf(Resource):
     
 @resources.route("/inventory_turnover")
 class get_it(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -161,6 +175,7 @@ class get_it(Resource):
     
 @resources.route("/customer_retentation_rate")
 class get_crr(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
@@ -177,6 +192,7 @@ class get_crr(Resource):
     
 @products.route("/product_sales")
 class get_ps(Resource):
+    @api.doc(security='apikey')
     @require_api_key
     def get(self):
         # Defining SQL query to get the data
