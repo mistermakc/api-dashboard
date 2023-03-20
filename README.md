@@ -10,3 +10,5 @@ The structure of this repository is as follows:
 - Architecture (visualization of system architecture)
 - Data (csv files)
 - KPIs (data cleaning)
+
+![alt text](https://github.com/mistermakc/capstone/blob/main/architecture/Capstone%20Architecture.png)
