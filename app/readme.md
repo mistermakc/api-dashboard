@@ -4,6 +4,8 @@ Welcome to the H&M KPI dashboard, a powerful solution built using Streamlit to h
 
 Try the dashboard: [H&M KPI Dashboard](https://mistermakc-capstone.streamlit.app)
 
+<img width="1505" alt="Screenshot 2023-03-21 at 12 41 18" src="https://user-images.githubusercontent.com/60471340/226595976-d58b288f-f0d1-479a-9bf3-d84593ebdbe3.png">
+
 ## Features
 
 The H&M KPI dashboard provides the following features:
