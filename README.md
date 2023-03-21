@@ -25,7 +25,7 @@ The structure of this repository is as follows:
 - **KPIs**
   - Developed with Pandas
   - Uploaded as individual tables to the database to increase the request time 
-
+&nbsp;
 > **More detailed documentation about the api and app can be found in their respective folders (README)**
   
 &nbsp;
