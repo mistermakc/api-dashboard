@@ -27,7 +27,7 @@ This includes operations for fetching the given resources, including error handl
 Before using the REST API, the following Python modules must be installed:
 
 1. Flask: `pip install Flask`
-2. Flask-RESTx: `pip install flask-restx`
+2. Flask-RESTX: `pip install flask-restx`
 3. SQLAlchemy: `pip install sqlalchemy`
 4. Retry: `pip install retry`
 
