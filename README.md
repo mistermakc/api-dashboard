@@ -9,12 +9,12 @@ The structure of this repository is as follows:
   - Developed with Flask-RestX
   - To deliver data, an API-key in the header is required
   - The API connects to a MySQL database in the Google Cloud
-  → Deployed with Google Cloud (App Engine)
+  > Deployed with Google Cloud (App Engine)
 - **App/ Client**
   - Developed with Pandas, Streamlit, and Streamlit Authenticator
   - To view the visualized data, a username and password is required
   - Allows for data analysis and insight generation
-  → Deployed with Streamlit Cloud (through GitHub repository)
+  > Deployed with Streamlit Cloud (through GitHub repository)
 - **Architecture**
   - Holistic overview of the solution's architecture
 - **Data**
