@@ -100,7 +100,7 @@ Before using the REST API, the following Python modules must be installed:
 ## Error Handling
 
 In case of any errors, the API will return a JSON object containing an error message and an appropriate HTTP status code.
-  200: 'Success'
-  401: 'Not authenticated'
-  404: 'Not found'
-  500: 'Database offline'
+  - 200: 'Success'
+  - 401: 'Not authenticated'
+  - 404: 'Not found'
+  - 500: 'Database offline'
