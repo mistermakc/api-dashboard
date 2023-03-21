@@ -1,4 +1,4 @@
-# H&M Analytics Dashboard
+# H&M KPI Dashboard
 
 Welcome to the H&M KPI dashboard, a powerful solution built using Streamlit to help you explore and analyze the most desired KPIs of H&M. 
 
