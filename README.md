@@ -6,7 +6,7 @@ developing a front-end.
 
 The structure of this repository is as follows:
 - **API**
-  - Developed with Flask Rest-X
+  - Developed with Flask-RestX
   - To deliver data, an API-key in the header is required
   - The API connects to a MySQL database in the Google Cloud
   → Deployed with Google Cloud (App Engine)
