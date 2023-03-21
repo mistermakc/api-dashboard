@@ -19,7 +19,7 @@ The H&M KPI dashboard provides the following features:
 1. **Log in** to the dashboard using your credentials.
    - Name: `Capstone`
    - Password: `Pandas2020!`
-   → To change your password, use the `pass_gen.py` file to hash your password and store your username and password in the `config.yaml` file
+   > To change your password, use the `pass_gen.py` file to hash your password and store your username and password in the `config.yaml` file
 2. Navigate through the **Revenue**, **Marketing**, **Customers**, and **Resources** tabs or have a close-up view at all the **Product Sales**.
 3. On each page, use the **sidebar filters** to explore data based on your preferences.
 4. View the **KPIs** and **charts** displayed on the pages to understand trends and patterns in the data.
