@@ -20,7 +20,7 @@ To improve the request time for the API, dedicated KPI tables have been created 
 - **Products**
   - Product Sales
 
-This includes operations for fetching the given resources, including error handling. The API uses as a predefined API key for authentication and authorization: "IEMCSBT23".
+This includes operations for fetching the given resources, including error handling. The API uses as a predefined API key for authentication and authorization: `"IEMCSBT23"`.
 
 ## Required Modules
 
