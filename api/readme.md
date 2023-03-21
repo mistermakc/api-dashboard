@@ -1,10 +1,10 @@
-# REST API Documentation - Flask-RESTx
+# REST API Documentation - Flask-RestX
 
-This document outlines the REST API built using Flask-RESTx for a web application that manages articles, transactions, and customers.
+This document highlights the REST API built using Flask-RestX for a web application that visualizes KPIs for H&M aggregated through article, transaction, and customer data.
 
 ## Overview
 
-This REST API is designed to provide access to the following resources:
+To improve the request time for the API, dedicated KPI tables have been created which use the underyling three data files. This REST API is designed to provide access to the following resources:
 
 - Articles
 - Transactions
