@@ -28,7 +28,7 @@ The structure of this repository is as follows:
 
 > **More detailed documentation about the api and app can be found in their respective folders (README)**
   
-  
+&nbsp;
   
 ## Solution Architecture
 
