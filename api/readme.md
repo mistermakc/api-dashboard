@@ -6,21 +6,19 @@ This document highlights the REST API built using Flask-RestX for a web applicat
 
 To improve the request time for the API, dedicated KPI tables have been created which use the underyling three data files. This REST API is designed to provide access to the following resources:
 
-- Articles
-- Transactions
-- Customers
-- Users
+- **Revenue**
+  - Sales Growth
+  - Average Order Value
+- **Marketing**
+  - Fashion News Effectiveness
+  - Fashion News Frequency
+- **Resources**
+  - Inventory Turnover
+  - Customer Retention Rate
+- **Products**
+  - Product Sales
 
-It includes operations for fetching, creating, and managing these resources. The API uses JSON Web Tokens (JWT) for authentication and authorization.
-
-## Necessary Action to use this API
-Create .env file with :
-MONGODB_URI=mongodb+srv://{0}:{1}@{2}/?retryWrites=true&w=majority
-USER=<your_username>
-PASSW=<your_password>
-HOST=<your host>
-DATABASE=<your database>
-COLLECTIONS_LIST=articles,transactions,customers
+This includes operations for fetching the given resources, including error handling. The API uses as a predefined API key for authentication and authorization. 
 
 ## Required Modules
 
@@ -28,48 +26,12 @@ Before using the REST API, the following Python modules must be installed:
 
 1. Flask: `pip install Flask`
 2. Flask-RESTx: `pip install flask-restx`
-3. Flask-JWT-Extended: `pip install flask-jwt-extended`
-4. PyMongo: `pip install pymongo`
-5. Python-dotenv: `pip install python-dotenv`
-6. Pandas: `pip install pandas`
-
-## Utility Functions
-
-The REST API uses the following utility functions:
-
-### `get_collection(collection_name)`
-
-- Description: Fetches a collection from the database.
-- Input: `collection_name` (string) - The name of the collection to fetch.
-- Output: JSON array of the specified collection.
-
-### `login(username, password)`
-
-- Description: Verifies a user's credentials and returns their details.
-- Input:
-  - `username` (string): The username of the user.
-  - `password` (string): The password of the user.
-- Output: JSON object containing the user's details, or `None` if the credentials are invalid.
-
-### `register(username, password)`
-
-- Description: Registers a new user in the database.
-- Input:
-  - `username` (string): The desired username of the new user.
-  - `password` (string): The desired password of the new user.
-- Output: JSON object containing the new user's details, or `None` if registration fails.
-
-### `collections_verifies_uploader()`
-
-- Description: Verifies that the necessary collections are present in the database and uploads them if they are missing.
-- Output: None.
-
-These utility functions are called by the code to manage the resources, authenticate users, and interact with the database. Make sure to have them properly implemented and imported in your project.
-
+3. SQLAlchemy: `pip install sqlalchemy`
+4. Retry: `pip install retry`
 
 ## Endpoints
 
-### Articles
+### Revenue
 
 #### GET /api/v1/articles
 
