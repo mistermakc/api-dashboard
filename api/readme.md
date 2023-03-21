@@ -4,6 +4,8 @@ This document highlights the REST API built using Flask-RestX for a web applicat
 
 Try the API: [H&M API](api.maxharrison.de)
 
+<img width="1491" alt="Screenshot 2023-03-21 at 12 42 10" src="https://user-images.githubusercontent.com/60471340/226596119-ff63183a-ff46-45cc-b4c1-baa5bec653a1.png">
+
 ## Overview
 
 To improve the request time for the API, dedicated KPI tables have been created by using the underyling three main datafiles. This REST API is designed to provide access to the following resources:
