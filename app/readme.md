@@ -26,16 +26,11 @@ The H&M KPI dashboard provides the following features:
 5. Log out when you're finished.
 
 ## Page Structure:
-1. Login page
-   Initial log-in page, then KPI page and log-out page
-2. Revenue
-   Page dedicated to the analysis of H&M's revenue statistics
-3. Marketing
-   Page dedicated to the analysis of H&M's marketing efforts
-4. Resources
-   Page dedicated to the analysis of H&M's customers and inventory
-5. Product Sales
-   Page dedicated to the analysis of H&M's product sales
+1. **Login page:** Initial log-in page, then KPI page and log-out page
+2. **Revenue:** Tab dedicated to the analysis of H&M's revenue statistics
+3. **Marketing:** Tab dedicated to the analysis of H&M's marketing efforts
+4. **Resources:** Tab dedicated to the analysis of H&M's customers and inventory
+5. **Product Sales:** Expander dedicated to the analysis of H&M's product sales
 
 ## Required Modules
 
