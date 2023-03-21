@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, current_app, request
 from sqlalchemy import create_engine
 from flask_restx import Api, Namespace, Resource
+import retry
 
 # Defining login credentials for mysql database
 user = "root"
@@ -26,7 +27,7 @@ def require_api_key(func):
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = host
 
-# Creating the api V1
+# Creating the api v1
 api = Api(app, version = '1.0',
     title = 'H&M API (Capstone)',
     description = """
@@ -71,24 +72,35 @@ products = Namespace('Products',
 api.add_namespace(products)
 
 # Defining function to connect to database and execute query
+@retry.retry(tries=2, delay=5)
 def connect(query):
     db = create_engine(
-    'mysql+pymysql://{0}:{1}@{2}/{3}' \
+        'mysql+pymysql://{0}:{1}@{2}/{3}' \
         .format(user, passw, host, database), \
-    connect_args = {'connect_timeout': 10})
+        connect_args = {'connect_timeout': 10})
     with current_app.app_context():
-        with db.connect() as connection:
-            results = connection.execute(query)
-            # Defining path based on output: if empty, do not return results
-            if results.returns_rows:
-                output = [dict(row) for row in results]
-                if output:
-                    return jsonify(output)
-                else: 
-                    return ({"message": "No results found"})
-            connection.close()
+        try:
+            with db.connect() as connection:
+                results = connection.execute(query)
+                # Defining path based on output: if empty, do not return results
+                if results.returns_rows:
+                    output = [dict(row) for row in results]
+                    if output:
+                        return jsonify(output)
+                    else: 
+                        return ({"message": "No results found"}), 404
+                connection.close()
+        except Exception as e:
+            return {"message": "Database is not reachable. Please try again later."}, 500
 
+# Defining api route for the sales growth KPI
 @revenue.route("/sales_growth")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_sg(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -104,8 +116,15 @@ class get_sg(Resource):
 
         # Returning the result as a JSON object
         return sales_growth
-    
+
+# Defining api route for the average order value KPI   
 @revenue.route("/average_order_value")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_aov(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -122,7 +141,14 @@ class get_aov(Resource):
         # Returning the result as a JSON object
         return sales_growth
     
+# Defining api route for the fashion news effectiveness KPI
 @marketing.route("/fashion_news_effectiveness")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_fne(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -139,7 +165,14 @@ class get_fne(Resource):
         # Returning the result as a JSON object
         return sales_growth
     
+# Defining api route for the fashion news frequency KPI
 @marketing.route("/fashion_news_frequency")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_fnf(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -155,8 +188,15 @@ class get_fnf(Resource):
 
         # Returning the result as a JSON object
         return sales_growth
-    
+
+# Defining api route for the inventory turnover KPI
 @resources.route("/inventory_turnover")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_it(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -173,7 +213,14 @@ class get_it(Resource):
         # Returning the result as a JSON object
         return sales_growth
     
+# Defining api route for the customer retentation rate KPI
 @resources.route("/customer_retentation_rate")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_crr(Resource):
     @api.doc(security='apikey')
     @require_api_key
@@ -189,8 +236,15 @@ class get_crr(Resource):
 
         # Returning the result as a JSON object
         return sales_growth
-    
+
+# Defining api route for the products sales KPI
 @products.route("/product_sales")
+@api.doc(responses={
+        200: 'Success',
+        401: 'Not authenticated',
+        404: 'Not found',
+        500: 'Database offline'
+    })
 class get_ps(Resource):
     @api.doc(security='apikey')
     @require_api_key
