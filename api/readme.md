@@ -2,7 +2,7 @@
 
 This document highlights the REST API built using Flask-RestX for a web application that visualizes KPIs for H&M aggregated through article, transaction, and customer data.
 
-Try the API: [H&M API](https//api.maxharrison.de)
+Try the API: [H&M API](https://api.maxharrison.de)
 
 <img width="1491" alt="Screenshot 2023-03-21 at 12 42 10" src="https://user-images.githubusercontent.com/60471340/226596119-ff63183a-ff46-45cc-b4c1-baa5bec653a1.png">
 
