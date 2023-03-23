@@ -33,4 +33,4 @@ The structure of this repository is as follows:
   
 ## Solution Architecture
 
-![alt text](https://github.com/mistermakc/capstone/blob/main/architecture/Capstone%20Architecture.png)
+<img width="860" alt="Capstone Architecture" src="https://user-images.githubusercontent.com/60471340/227381308-55ade2b8-b53f-4681-9c31-89224cd8d5a8.png">
