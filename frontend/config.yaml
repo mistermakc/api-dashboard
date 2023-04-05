@@ -10,4 +10,6 @@ cookie:
   name: token
 preauthorized:
   emails:
-  - max@heilingbrunner.info  
+  - max@heilingbrunner.info
+api_key:
+  key: IEMCSBT23

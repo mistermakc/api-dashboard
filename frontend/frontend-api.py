@@ -3,11 +3,12 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 from PIL import Image
-import streamlit_authenticator as stauth
-from yaml.loader import SafeLoader
-import yaml
-import authenticator
 import requests
+import yaml
+from yaml.loader import SafeLoader
+
+import streamlit_authenticator as stauth
+import authenticator
 
 # Defining credentials 
 with open('frontend/config.yaml') as file:
@@ -31,10 +32,10 @@ if authentication_status:
     st.write(f'Welcome *{name}*')
 
     # Defining querying function
-    @st.cache
+    @st.cache(allow_output_mutation=True)
     def load_data(url):
         try:
-            headers = {'x-api-key': 'IEMCSBT23'}
+            headers = {'x-api-key': config['api_key']['key']}
             request = requests.get(f"https://api.maxharrison.de/api/v1/{url}", headers=headers).json()
             data = pd.DataFrame(request)
             data["kpi_date"] = pd.to_datetime(data["kpi_date"])
@@ -45,15 +46,27 @@ if authentication_status:
         except Exception as e:
             print(e)
         return data 
+    
+    # Reducing api calls by caching content
+    if 'data' not in st.session_state:
+        st.session_state.data = {
+            "sales_growth": load_data("sales_growth"),
+            "average_order_value": load_data("average_order_value"),
+            "fashion_news_effectiveness": load_data("fashion_news_effectiveness"),
+            "fashion_news_frequency": load_data("fashion_news_frequency"),
+            "inventory_turnover": load_data("inventory_turnover"),
+            "customer_retentation_rate": load_data("customer_retentation_rate"),
+            "product_sales": load_data("product_sales"),
+        }
 
     # Loading data for KPIs
-    df_sg = load_data("sales_growth")             
-    df_aov = load_data("average_order_value")
-    df_fne = load_data("fashion_news_effectiveness")
-    df_fnf = load_data("fashion_news_frequency")
-    df_it = load_data("inventory_turnover")
-    df_crr = load_data("customer_retentation_rate")
-    df_ps = load_data("product_sales")
+    df_sg = st.session_state.data["sales_growth"]
+    df_aov = st.session_state.data["average_order_value"]
+    df_fne = st.session_state.data["fashion_news_effectiveness"]
+    df_fnf = st.session_state.data["fashion_news_frequency"]
+    df_it = st.session_state.data["inventory_turnover"]
+    df_crr = st.session_state.data["customer_retentation_rate"]
+    df_ps = st.session_state.data["product_sales"]
     
     # Defining multiselection in Streamlit for sales channel
     sales_channel_unique = df_sg["sales_channel"].drop_duplicates().to_list()
@@ -98,10 +111,11 @@ if authentication_status:
     filter_product = st.sidebar.multiselect(
         label="PRODUCTS",
         options=product_unique,
-        default=product_unique,
+        default="Bag",
         key="multiselect_product"
     )
 
+    # Function to filter data
     def filter_data(df, filters):
         filtered_data = df.copy()
         for column, filter_values in filters.items():
@@ -111,6 +125,7 @@ if authentication_status:
         ]
         return filtered_data
 
+    # Filtering the data for the different KPIs and metrics
     filtered_data_sg = filter_data(df_sg, {"sales_channel": filter_sales_channel})
     filtered_data_aov = filter_data(df_aov, {"sales_channel": filter_sales_channel})
     filtered_data_fne = filter_data(df_fne, {"fashion_news": filter_fashion_news})
@@ -120,6 +135,8 @@ if authentication_status:
     filtered_data_ps = filter_data(df_ps, {"product_type_name": filter_product})
     filtered_data_ps["kpi_date"] = pd.to_datetime(filtered_data_ps["kpi_date"]).dt.strftime('%m-%Y')
     filtered_data_ps = filtered_data_ps.rename(columns={"kpi_date": "Date", "product_type_name": "Product Name", "price": "Numbers Sold"})
+    metrics_sg = "€{:,.0f}".format(filtered_data_sg['revenue'].sum())
+    metrics_aov = "€{:,.2f}".format(filtered_data_aov['price'].sum())
 
     # Creating the chart for sales growth
     chart_sg = alt.Chart(filtered_data_sg).mark_bar().encode(
@@ -249,6 +266,21 @@ if authentication_status:
     with col2:
         image = Image.open('data/H&M-Logo-S.png')
         st.image(image, width=100, output_format='PNG')
+
+    # Displaying the two metrics
+    with st.container():
+        kpi1, kpi2, kpi3 = st.columns(3)
+
+        kpi1.metric(
+            label = "Total Revenue",
+            value = metrics_sg,
+            delta = "{:,.2f}%".format(((filtered_data_sg['revenue'].mean() - df_sg['revenue'].mean()) / df_sg['revenue'].mean()) * 100),
+        )
+        kpi2.metric(
+            label = "Average Order Value",
+            value = metrics_aov,
+            delta = "{:,.2f}%".format(((filtered_data_aov['price'].mean() - df_aov['price'].mean()) / df_aov['price'].mean()) * 100),
+        )
 
     # Creating tabs to display different KPIs
     tab1, tab2, tab3 = st.tabs(["Revenue", "Marketing", "Resources"])
