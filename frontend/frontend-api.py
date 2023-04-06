@@ -10,6 +10,17 @@ from yaml.loader import SafeLoader
 import streamlit_authenticator as stauth
 import authenticator
 
+
+image = Image.open('data/H&M-Logo-S.png')
+
+# Setting theme for streamlit
+st.set_page_config(
+    page_title="H&M Dashboard", 
+    page_icon=image, 
+    layout="centered", 
+    initial_sidebar_state="expanded",
+)
+
 # Defining credentials 
 with open('frontend/config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -46,27 +57,15 @@ if authentication_status:
         except Exception as e:
             print(e)
         return data 
-    
-    # Reducing api calls by caching content
-    if 'data' not in st.session_state:
-        st.session_state.data = {
-            "sales_growth": load_data("sales_growth"),
-            "average_order_value": load_data("average_order_value"),
-            "fashion_news_effectiveness": load_data("fashion_news_effectiveness"),
-            "fashion_news_frequency": load_data("fashion_news_frequency"),
-            "inventory_turnover": load_data("inventory_turnover"),
-            "customer_retentation_rate": load_data("customer_retentation_rate"),
-            "product_sales": load_data("product_sales"),
-        }
 
     # Loading data for KPIs
-    df_sg = st.session_state.data["sales_growth"]
-    df_aov = st.session_state.data["average_order_value"]
-    df_fne = st.session_state.data["fashion_news_effectiveness"]
-    df_fnf = st.session_state.data["fashion_news_frequency"]
-    df_it = st.session_state.data["inventory_turnover"]
-    df_crr = st.session_state.data["customer_retentation_rate"]
-    df_ps = st.session_state.data["product_sales"]
+    df_sg = load_data("sales_growth")
+    df_aov = load_data("average_order_value")
+    df_fne = load_data("fashion_news_effectiveness")
+    df_fnf = load_data("fashion_news_frequency")
+    df_it = load_data("inventory_turnover")
+    df_crr = load_data("customer_retentation_rate")
+    df_ps = load_data("product_sales")
     
     # Defining multiselection in Streamlit for sales channel
     sales_channel_unique = df_sg["sales_channel"].drop_duplicates().to_list()
@@ -135,8 +134,8 @@ if authentication_status:
     filtered_data_ps = filter_data(df_ps, {"product_type_name": filter_product})
     filtered_data_ps["kpi_date"] = pd.to_datetime(filtered_data_ps["kpi_date"]).dt.strftime('%m-%Y')
     filtered_data_ps = filtered_data_ps.rename(columns={"kpi_date": "Date", "product_type_name": "Product Name", "price": "Numbers Sold"})
-    metrics_sg = "€{:,.0f}".format(filtered_data_sg['revenue'].sum())
-    metrics_aov = "€{:,.2f}".format(filtered_data_aov['price'].sum())
+    metrics_sg = f"€{filtered_data_sg['revenue'].sum():,.0f}"
+    metrics_aov = f"€{filtered_data_aov['price'].sum():,.2f}"
 
     # Creating the chart for sales growth
     chart_sg = alt.Chart(filtered_data_sg).mark_bar().encode(
