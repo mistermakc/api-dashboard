@@ -10,10 +10,8 @@ from yaml.loader import SafeLoader
 import streamlit_authenticator as stauth
 import authenticator
 
-
-image = Image.open('data/H&M-Logo-S.png')
-
 # Setting theme for streamlit
+image = Image.open('data/H&M-Logo-S.png')
 st.set_page_config(
     page_title="H&M Dashboard", 
     page_icon=image, 
