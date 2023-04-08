@@ -25,6 +25,9 @@ The structure of this repository is as follows:
 - **KPIs**
   - Developed with Pandas
   - Uploaded as individual tables to the database to increase the request time 
+- **Web Catalogue**
+  - Developed with Bootstrap, HTML, and JS
+  - Web Catalogue to see product portfolio 
 
 &nbsp;
 > **More detailed documentation about the api and app can be found in their respective folders (README)**
