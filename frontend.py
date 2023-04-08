@@ -11,7 +11,7 @@ import streamlit_authenticator as stauth
 import authenticator
 
 # Setting theme for streamlit
-image = Image.open('data/H&M-Logo-S.png')
+image = Image.open('data/H&M-Logo.png')
 st.set_page_config(
     page_title="H&M Dashboard", 
     page_icon=image, 
