@@ -11,4 +11,3 @@ streamlit_authenticator
 pyyaml
 authenticator
 PyMySQL
-pycopy-webbrowser
