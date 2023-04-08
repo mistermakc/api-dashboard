@@ -101,6 +101,9 @@ if authentication_status:
     df_ps = load_data("product_sales")
     
     # Defining Streamlit widgets for filters
+    st.sidebar.image("data/H&M-Logo.png", output_format='PNG', use_column_width=True)
+
+    st.sidebar.header("Filters:")
     sales_channel_unique = df_sg["sales_channel"].drop_duplicates().to_list()
     filter_sales_channel = st.sidebar.multiselect("SALES CHANNEL", sales_channel_unique, default=sales_channel_unique, key="multiselect_sales_channel")
 
@@ -150,13 +153,8 @@ if authentication_status:
     chart_it = create_chart(filtered_data_it, alt.X('yearmonth(kpi_date):T', title='Date'), alt.Y('inventory_turnover:Q', title='Inventory Turnover'), alt.Color('sales_channel:N', title='Sales Channel', scale=alt.Scale(domain=["Offline", "Online"], range=['#26272F', '#CC071E'])), 'Inventory Turnover')
     chart_crr = create_chart(filtered_data_crr, alt.X('yearmonth(kpi_date):T', title='Date'), alt.Y('customer_retention_rate:Q', title='Customer Retention Rate'), alt.Color(value='#CC071E'), 'Customer Retention',height=300)
 
-    # Displaying the two charts side by side
-    col1, col2 = st.columns(2)
-    with col1:
-        st.title("H&M Dashboard")
-    with col2:
-        image = Image.open('data/H&M-Logo-S.png')
-        st.image(image, width=100, output_format='PNG')
+    # Displaying the title 
+    st.title("H&M KPI Dashboard")
 
     # Displaying the two metrics
     with st.container():
