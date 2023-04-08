@@ -10,6 +10,7 @@ cookie:
   name: token
 preauthorized:
   emails:
-  - max@heilingbrunner.info
+  - gustavom@faculty.ie.edu
+  - jgarciah@faculty.ie.edu
 api_key:
   key: IEMCSBT23
