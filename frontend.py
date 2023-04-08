@@ -6,12 +6,13 @@ from PIL import Image
 import requests
 import yaml
 from yaml.loader import SafeLoader
+import webbrowser
 
 import streamlit_authenticator as stauth
 import authenticator
 
 # Setting theme for streamlit
-image = Image.open('data/H&M-Logo.png')
+image = Image.open('data/HM-Logo.png')
 st.set_page_config(
     page_title="H&M Dashboard", 
     page_icon=image, 
@@ -101,7 +102,7 @@ if authentication_status:
     df_ps = load_data("product_sales")
     
     # Defining Streamlit widgets for filters
-    st.sidebar.image("data/H&M-Logo.png", output_format='PNG', use_column_width=True)
+    st.sidebar.image("data/HM-Logo.png", output_format='PNG', use_column_width=True)
 
     st.sidebar.header("Filters:")
     sales_channel_unique = df_sg["sales_channel"].drop_duplicates().to_list()
@@ -172,7 +173,7 @@ if authentication_status:
         )
 
     # Creating tabs to display different KPIs
-    tab1, tab2, tab3 = st.tabs(["Revenue", "Marketing", "Resources"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Revenue", "Marketing", "Resources", "Catalogue"])
 
     with tab1:
         # Displaying the two charts side by side
@@ -197,6 +198,10 @@ if authentication_status:
             st.altair_chart(chart_it, use_container_width=True)
         with col2:
             st.altair_chart(chart_crr, use_container_width=True)
+
+    with tab4:
+        if st.button('Open Catalogue'):
+            webbrowser.open_new_tab('https://maxharrison.de/')
 
     # Creating a dataframe
     with st.expander("Explore product sales per month and year"):

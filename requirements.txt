@@ -11,3 +11,4 @@ streamlit_authenticator
 pyyaml
 authenticator
 PyMySQL
+webbrowser

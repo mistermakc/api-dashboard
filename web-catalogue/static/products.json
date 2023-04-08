@@ -1,0 +1,88 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "Bag",
+        "price": 35,
+        "category": "apparel",
+        "image": "static/images/hm-bag.jpeg"
+      },
+      {
+        "id": 2,
+        "name": "Ballerinas",
+        "price": 85,
+        "category": "shoewear",
+        "image": "static/images/hm-shoes.jpeg"
+      },
+      {
+        "id": 3,
+        "name": "Belt",
+        "price": 30,
+        "category": "accessories",
+        "image": "static/images/hm-belt.jpeg"
+      },
+      {
+        "id": 4,
+        "name": "Cardigan",
+        "price": 25,
+        "category": "apparel",
+        "image": "static/images/hm-cardigan.jpeg"
+      },
+      {
+        "id": 5,
+        "name": "Dress",
+        "price": 90,
+        "category": "apparel",
+        "image": "static/images/hm-dress.jpeg"
+      },
+      {
+        "id": 6,
+        "name": "Earring",
+        "price": 15,
+        "category": "accessories",
+        "image": "static/images/hm-earring.jpeg"
+      },
+      {
+        "id": 7,
+        "name": "Hoodie",
+        "price": 55,
+        "category": "apparel",
+        "image": "static/images/hm-hoodie.jpeg"
+      },
+      {
+        "id": 8,
+        "name": "Ring",
+        "price": 40,
+        "category": "accessories",
+        "image": "static/images/hm-ring.jpeg"
+      },
+      {
+        "id": 9,
+        "name": "Scarf",
+        "price": 60,
+        "category": "accessories",
+        "image": "static/images/hm-scarf.jpeg"
+      },
+      {
+        "id": 10,
+        "name": "Sunglassess",
+        "price": 120,
+        "category": "eyewear",
+        "image": "static/images/hm-sunglasses.jpeg"
+      },
+      {
+        "id": 11,
+        "name": "Underwear",
+        "price": 20,
+        "category": "apparel",
+        "image": "static/images/hm-underwear.jpeg"
+      },
+      {
+        "id": 12,
+        "name": "Watch",
+        "price": 100,
+        "category": "accessories",
+        "image": "static/images/hm-watch.jpeg"
+      }
+    ]
+  }
