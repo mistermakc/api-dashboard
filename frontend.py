@@ -6,7 +6,7 @@ from PIL import Image
 import requests
 import yaml
 from yaml.loader import SafeLoader
-import webbrowser
+import base64
 
 import streamlit_authenticator as stauth
 import authenticator
@@ -200,14 +200,15 @@ if authentication_status:
             st.altair_chart(chart_crr, use_container_width=True)
 
     with tab4:
-        with st.container():
-            html_template = f"""
-            <a href="https://maxharrison.de" target="_blank">
-                <img src="data/HM-Catalogue.png" alt="Image" style="max-width: 100%; height: auto;"/>
-            </a>
-            """
-            st.markdown(html_template, unsafe_allow_html=True)
+        # Image URL and hyperlink URL
+        image_path = "data/HM-Catalogue.png"
+        hyperlink_url = "https://maxharrison.de"
 
+        # Displaying the image with a link
+        st.markdown(
+            f'<a href="{hyperlink_url}" target="_blank"><img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Image" width="100%"></a>',
+            unsafe_allow_html=True,
+        )
 
     # Creating a dataframe
     with st.expander("Explore product sales per month and year"):
