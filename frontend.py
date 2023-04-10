@@ -201,8 +201,13 @@ if authentication_status:
 
     with tab4:
         with st.container():
-            url = "https://maxharrison.de"
-            st.markdown(f'<a href="{url}" target="_blank" rel="noopener noreferrer" style="display: inline-block; text-align: center; background-color: #CC071E; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Open Catalogue</a>', unsafe_allow_html=True)
+            html_template = f"""
+            <a href="https://maxharrison.de" target="_blank">
+                <img src="data/HM-Catalogue.png" alt="Image" style="max-width: 100%; height: auto;"/>
+            </a>
+            """
+            st.markdown(html_template, unsafe_allow_html=True)
+
 
     # Creating a dataframe
     with st.expander("Explore product sales per month and year"):
