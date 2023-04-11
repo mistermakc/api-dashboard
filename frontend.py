@@ -206,7 +206,7 @@ if authentication_status:
 
         # Displaying the image with a link
         st.markdown(
-            f'<a href="{hyperlink_url}" onclick="window.open(this.href, \'_self\'); return false;"><img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Image" width="100%"></a>',
+            f'<a href="{hyperlink_url}" target="_self"><img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Image" width="100%"></a>',
             unsafe_allow_html=True,
         )
 
